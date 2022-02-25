@@ -1,1 +1,1 @@
-export { XTRA } from './xtra';
+export { XtraVision } from './xtravision';

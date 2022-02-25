@@ -4,7 +4,8 @@ import { GET_USER_CLASS_STATS, IDENTIFY_USER_MUTATION } from './graphql/common';
 
 const SERVER_URL = 'https://saasstagingapi.xtraininglive.com/api/v1/graphql';
 // const SERVER_URL = 'http://localhost:4000/api/v1/graphql';
-export class XTRA {
+
+export class XtraVision {
   readonly userId: string | null;
   readonly appId: string;
   readonly orgId: string;
@@ -21,7 +22,7 @@ export class XTRA {
       appId: appId,
       orgId: orgId,
     };
-    this.token = jwt.sign(payload, appSecret);
+    this.token = jwt.sign(payload, appSecret, { expiresIn: '2h' });
 
     const graphQLClient = new GraphQLClient(SERVER_URL, {
       headers: {
