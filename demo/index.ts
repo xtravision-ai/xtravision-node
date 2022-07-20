@@ -4,7 +4,11 @@ import { XtraVision } from '../dist/xtravision';
 // const xtraObj = new XtraVision('YOUR_APP_ID', 'YOUR_ORGANIZATION_ID', 'YOUR_APP_SECRET', null);
 
 // Step 2: Call this to register the user the first time. Please store the user id returned by the API
-// xtraObj.identifyUser('John', 'Doe', 'johndoe@yourdomain.com').then((response) => {
+// xtraObj.registerUser('John', 'Doe', 'johndoe@yourdomain.com').then((response) => {
+//   console.log(response);
+// });
+
+// xtraObj.registerUser('johndoe1@yourdomain.com').then((response) => {
 //   console.log(response);
 // });
 
@@ -23,4 +27,8 @@ janStartDate.setMonth(janStartDate.getMonth() - 1);
 
 xtraUserObj.getUserClassStats(null, janStartDate).then((userStats) => {
   console.log(userStats);
+});
+
+xtraUserObj.getUserAssessmentResults(janStartDate).then((results) => {
+  console.log(results);
 });
