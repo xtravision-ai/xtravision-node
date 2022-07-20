@@ -1,8 +1,13 @@
 import { GraphQLClient } from 'graphql-request';
 import * as jwt from 'jsonwebtoken';
-import { GET_USER_CLASS_STATS, IDENTIFY_USER_MUTATION } from './graphql/common';
+import {
+  GET_USER_ASSESSMENT_RESULTS,
+  GET_USER_CLASS_STATS,
+  REGISTER_TRAINER_MUTATION,
+  REGISTER_USER_MUTATION,
+} from './graphql/common';
 
-const SERVER_URL = 'https://saasstagingapi.xtraininglive.com/api/v1/graphql';
+const SERVER_URL = 'https://saasapi.xtravision.ai/api/v1/graphql';
 // const SERVER_URL = 'http://localhost:4000/api/v1/graphql';
 
 export class XtraVision {
@@ -37,18 +42,19 @@ export class XtraVision {
     return this.token;
   }
 
-  async identifyUser(firstName: string, lastName: string, email: string) {
-    const variables = {
-      firstName,
-      lastName,
+  async registerUser(email: string, firstName?: string, lastName?: string) {
+    const variables: any = {
       email,
     };
 
+    if (firstName) variables['firstName'] = firstName;
+    if (lastName) variables['lastName'] = firstName;
+
     // make graphql call to XTRA SaaS server and return the data
-    return await this.graphQLClient.request(IDENTIFY_USER_MUTATION, variables);
+    return await this.graphQLClient.request(REGISTER_USER_MUTATION, variables);
   }
 
-  async identifyTrainer(firstName: string, lastName: string, email: string) {
+  async registerTrainer(firstName: string, lastName: string, email: string) {
     const variables = {
       firstName,
       lastName,
@@ -56,7 +62,7 @@ export class XtraVision {
     };
 
     // make graphql call to XTRA SaaS server and return the data
-    return await this.graphQLClient.request(IDENTIFY_USER_MUTATION, variables);
+    return await this.graphQLClient.request(REGISTER_TRAINER_MUTATION, variables);
   }
 
   async getUserClassStats(classScheduleId?: string | null, startDate?: Date | null, endDate?: Date | null) {
@@ -67,5 +73,14 @@ export class XtraVision {
 
     // make graphql call to XTRA SaaS server
     return await this.graphQLClient.request(GET_USER_CLASS_STATS, variables);
+  }
+
+  async getUserAssessmentResults(startDate?: Date | null, endDate?: Date | null) {
+    const variables: any = {};
+    if (startDate) variables['startDate'] = startDate;
+    if (endDate) variables['endDate'] = endDate;
+
+    // make graphql call to XTRA SaaS server
+    return await this.graphQLClient.request(GET_USER_ASSESSMENT_RESULTS, variables);
   }
 }

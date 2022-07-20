@@ -1,12 +1,8 @@
 import { gql } from 'graphql-request';
 
-export const IDENTIFY_USER_MUTATION = gql`
-  mutation identifyUser(
-    $firstName: String!
-    $lastName: String!
-    $email: String!
-  ) {
-    identifyUser(firstName: $firstName, lastName: $lastName, email: $email) {
+export const REGISTER_USER_MUTATION = gql`
+  mutation registerUser($firstName: String, $lastName: String, $email: String!) {
+    registerUser(firstName: $firstName, lastName: $lastName, email: $email) {
       id
       firstName
       lastName
@@ -14,13 +10,9 @@ export const IDENTIFY_USER_MUTATION = gql`
   }
 `;
 
-export const IDENTIFY_TRAINER_MUTATION = gql`
-  mutation identifyTrainer(
-    $firstName: String!
-    $lastName: String!
-    $email: String!
-  ) {
-    identifyTrainer(firstName: $firstName, lastName: $lastName, email: $email) {
+export const REGISTER_TRAINER_MUTATION = gql`
+  mutation registerTrainer($firstName: String!, $lastName: String!, $email: String!) {
+    registerTrainer(firstName: $firstName, lastName: $lastName, email: $email) {
       id
       firstName
       lastName
@@ -29,16 +21,8 @@ export const IDENTIFY_TRAINER_MUTATION = gql`
 `;
 
 export const GET_USER_CLASS_STATS = gql`
-  query getUserClassStats(
-    $classScheduleId: String
-    $startDate: DateTime
-    $endDate: DateTime
-  ) {
-    getUserClassStats(
-      classScheduleId: $classScheduleId
-      startDate: $startDate
-      endDate: $endDate
-    ) {
+  query getUserClassStats($classScheduleId: String, $startDate: DateTime, $endDate: DateTime) {
+    getUserClassStats(classScheduleId: $classScheduleId, startDate: $startDate, endDate: $endDate) {
       id
       timeSpent
       otherStats
@@ -51,6 +35,17 @@ export const GET_USER_CLASS_STATS = gql`
       classSchedule {
         id
       }
+    }
+  }
+`;
+
+export const GET_USER_ASSESSMENT_RESULTS = gql`
+  query getUserAssessmentResults($startDate: DateTime, $endDate: DateTime) {
+    getUserAssessmentResults(startDate: $startDate, endDate: $endDate) {
+      id
+      results
+      savedDate
+      assessmentName
     }
   }
 `;
