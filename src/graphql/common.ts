@@ -11,7 +11,7 @@ export const REGISTER_USER_MUTATION = gql`
 `;
 
 export const REGISTER_TRAINER_MUTATION = gql`
-  mutation registerTrainer($firstName: String!, $lastName: String!, $email: String!) {
+  mutation registerTrainer($firstName: String, $lastName: String, $email: String!) {
     registerTrainer(firstName: $firstName, lastName: $lastName, email: $email) {
       id
       firstName
