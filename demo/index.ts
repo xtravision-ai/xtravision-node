@@ -50,6 +50,8 @@ async function doSomeOperation(userId: string) {
   const limit = 5;
   const offset = 0;
 
+  const classSceduleId = 'c4fc8001-4727-4653-a6ac-d605937743f0';
+
   const assessmentResults = await xtraObj.getUserAssessmentResults(limit, offset, {
     startDate: currentMonthFirstDay,
     endDate: currentDate,
@@ -62,11 +64,7 @@ async function doSomeOperation(userId: string) {
   assessmentResults.length > 0 ? log('First result of assessmentResults:', assessmentResults[0].results) : '';
 
   // get stats of current month
-  const stats = await xtraObj.getUserClassStats(
-    'c4fc8001-4727-4653-a6ac-d605937743f0',
-    currentMonthFirstDay,
-    currentDate,
-  );
+  const stats = await xtraObj.getUserClassStats(classSceduleId, currentMonthFirstDay, currentDate);
   //   show all stats: display empty array if data is not present
   log('User stats:', stats);
 }
