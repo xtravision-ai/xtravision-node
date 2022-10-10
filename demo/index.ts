@@ -55,9 +55,6 @@ async function doSomeOperation(userId: string) {
     endDate: currentDate,
   });
 
-  // testing
-  // const assessmentResults = await xtraObj.getUserAssessmentResults(16, 0, { startDate, endDate });
-
   // show all assessmentResults: display empty array if data is not present
   log('User assessmentResults:', assessmentResults);
 
