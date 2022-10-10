@@ -40,12 +40,15 @@ export const GET_USER_CLASS_STATS = gql`
 `;
 
 export const GET_USER_ASSESSMENT_RESULTS = gql`
-  query getUserAssessmentResults($startDate: DateTime, $endDate: DateTime) {
-    getUserAssessmentResults(startDate: $startDate, endDate: $endDate) {
-      id
-      results
-      savedDate
-      assessmentName
+  query getUserAssessmentResults($limit: Int, $offset: Int, $userAssessmentFilter: userAssessmentFilter!) {
+    getUserAssessmentResults(limit: $limit, offset: $offset, userAssessmentFilter: $userAssessmentFilter) {
+      total
+      userAssessmentResult {
+        assessmentName
+        id
+        results
+        savedDate
+      }
     }
   }
 `;
