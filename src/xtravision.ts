@@ -7,8 +7,21 @@ import {
   REGISTER_USER_MUTATION,
 } from './graphql/common';
 
-const SERVER_URL = 'https://saasapi.xtravision.ai/api/v1/graphql';
-// const SERVER_URL = 'http://localhost:4000/api/v1/graphql';
+const SERVER_URL = !!process.env.IS_XTRA_DEV ? 'http://localhost:4000/api/v1/graphql' : "https://saasapi.xtravision.ai/api/v1/graphql";
+
+type Credentials =  {
+  appId: string, 
+  orgId: string, 
+  appSecret: string,
+  userId?: string | null
+}
+
+type User = {
+  email: string,
+  firstName?:string,
+  lastName?:string,
+}
+
 
 export class XtraVision {
   readonly userId: string | null;
@@ -17,17 +30,18 @@ export class XtraVision {
   readonly token: string;
   graphQLClient: GraphQLClient;
 
-  constructor(appId: string, orgId: string, appSecret: string, userId: string | null) {
-    this.userId = userId;
-    this.appId = appId;
-    this.orgId = orgId;
+  constructor(credentials: Credentials, params: jwt.SignOptions = {expiresIn : '24h'} ) {
+
+    this.userId = credentials.userId? credentials.userId : null;
+    this.appId = credentials.appId;
+    this.orgId = credentials.orgId;
 
     const payload = {
-      userId: userId,
-      appId: appId,
-      orgId: orgId,
+      userId: this.userId,
+      appId: this.appId,
+      orgId: this.orgId,
     };
-    this.token = jwt.sign(payload, appSecret, { expiresIn: '2h' });
+    this.token = jwt.sign(payload, credentials.appSecret, { expiresIn: params.expiresIn});
 
     const graphQLClient = new GraphQLClient(SERVER_URL, {
       headers: {
@@ -42,16 +56,17 @@ export class XtraVision {
     return this.token;
   }
 
-  async registerUser(email: string, firstName?: string, lastName?: string) {
+  async registerUser(userObj : User) {
     const variables: any = {
-      email,
+      email: userObj.email
     };
 
-    if (firstName) variables['firstName'] = firstName;
-    if (lastName) variables['lastName'] = firstName;
+    if (userObj.firstName) variables['firstName'] = userObj.firstName;
+    if (userObj.lastName) variables['lastName'] = userObj.lastName;
 
     // make graphql call to XTRA SaaS server and return the data
-    return await this.graphQLClient.request(REGISTER_USER_MUTATION, variables);
+    const response = await this.graphQLClient.request(REGISTER_USER_MUTATION, variables);
+    return response?.registerUser
   }
 
   async registerTrainer(firstName: string, lastName: string, email: string) {
@@ -62,7 +77,7 @@ export class XtraVision {
     };
 
     // make graphql call to XTRA SaaS server and return the data
-    return await this.graphQLClient.request(REGISTER_TRAINER_MUTATION, variables);
+     return await this.graphQLClient.request(REGISTER_TRAINER_MUTATION, variables);
   }
 
   async getUserClassStats(classScheduleId?: string | null, startDate?: Date | null, endDate?: Date | null) {
@@ -81,6 +96,7 @@ export class XtraVision {
     if (endDate) variables['endDate'] = endDate;
 
     // make graphql call to XTRA SaaS server
-    return await this.graphQLClient.request(GET_USER_ASSESSMENT_RESULTS, variables);
+    const response =  await this.graphQLClient.request(GET_USER_ASSESSMENT_RESULTS, variables);
+    return response?.getUserAssessmentResults
   }
 }

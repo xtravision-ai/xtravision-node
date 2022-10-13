@@ -30,11 +30,13 @@
   "scripts": {
     "prepare": "tsc --outDir dist/",
     "build": "yarn linux:clean && tsc",
-    "linux:clean": "shx rm -rf ./dist",
+    "linux:clean": " rm -rf ./dist",
     "build:windows": "yarn windows:clean && tsc",
     "windows:clean": "rmdir /s dist",
     "lint": "eslint --ext .ts src",
-    "demo": "ts-node demo/index.ts"
+    "start:demo": "ts-node demo/index.ts",
+    "start:local": "IS_XTRA_DEV=true ts-node demo/index.ts"
+
   },
   "dependencies": {
     "@types/jsonwebtoken": "^8.5.8",

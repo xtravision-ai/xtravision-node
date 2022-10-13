@@ -1,34 +1,122 @@
 import { XtraVision } from '../dist/xtravision';
 
+// required variable
+let credentials = {
+    orgId: "79b0bb60-3b1d-11ed-ae44-0242ac120002",
+    appId: "7c1569a6-3b1d-11ed-ae44-0242ac120002",
+    appSecret:"93a52a2a0f208277",
+    userId: null
+}
+ 
+
+/**
+ * code Snippet for user registration
+ */
+async function registerUser(){
+    /**
+     * IMP:
+     *  - You can use, "xtraObj" to register your all existing user or new users.
+     *  - it will register user if email-id does not exit, else return existing details.
+     *  
+     */
+    // create auth token for user registration
+    const xtraObj = new XtraVision(credentials);
+
+    //user:
+    const userObj = {
+        email: "johnfly@yourdomain.com",
+        firstName: "John",
+        lastName: "Fly"
+    }
+    try {
+        return  await xtraObj.registerUser(userObj);
+    } catch(e) {
+        errorHandler(e)
+    }
+}
+
+async function doSomeOperation(userId: string){
+
+    // get xtra-Object for specific user with 30days validation
+    const xtraObj = new XtraVision({...credentials, userId}, {expiresIn: "30d"});
+
+    // IMP: serve below authToken to your frontend SDK for further real-time operation
+    const authToken = xtraObj.getAuthToken()
+    log(`Authtoken for user-id(${userId}): `, authToken)
+
+    // get stats of current month
+    const currentDate = new Date() //Date("11/30/2012")
+    const currentMonthFirstDay = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
+
+    const stats = await xtraObj.getUserAssessmentResults(currentMonthFirstDay, currentDate)
+    // show all stats: display empty array if data is not present
+    log("User Stats:", stats);
+
+    // fist user stats
+    stats.length > 0 ? log("First result of stats:", stats[0].results) : ''
+
+}
+
+// utility method
+const log = function(param1:any, param2?:any) {
+    param2? console.log(param1 + '\n', param2) : console.log(param1)
+}
+
+// error handler
+function errorHandler(e: any){
+    console.error('ErrorHandler: ', e?.message)
+    console.error('Error Object', e)
+
+    process.exit(1)
+}
+
+
+async function start(){
+
+    //Register user, if user does not exit. (Get same details if email id already exist)
+    const userDetails = await registerUser();
+
+    //IMP: store user-id into required db so you can get data
+    log("Fetch userDetails", userDetails)
+    
+    // let's do some operations
+    await doSomeOperation(userDetails.id)
+
+    process.exit(0)
+}
+
+
+start();
+
+
 // Step 1: Create an instance of XTRA with the userId as null to register the user first time
 // const xtraObj = new XtraVision('YOUR_APP_ID', 'YOUR_ORGANIZATION_ID', 'YOUR_APP_SECRET', null);
+// const xtraObj = new XtraVision(appId, orgId, appSecret);
 
-// Step 2: Call this to register the user the first time. Please store the user id returned by the API
-// xtraObj.registerUser('John', 'Doe', 'johndoe@yourdomain.com').then((response) => {
+// // Step 2: Call this to register the user the first time. Please store the user id returned by the API
+// xtraObj.registerUser('John', 'Fly', 'johnfly@yourdomain.com').then((response) => {
 //   console.log(response);
 // });
 
-// xtraObj.registerUser('johndoe1@yourdomain.com').then((response) => {
-//   console.log(response);
-// });
+//// xtraObj.registerUser('johndoe1@yourdomain.com').then((response) => {
+////   console.log(response);
+//// });
 
-// Step 3: Create an instance of XTRA with the userId as null to register the user first time
-const xtraUserObj = new XtraVision(
-  'YOUR_APP_ID',
-  'YOUR_ORGANIZATION_ID',
-  'YOUR_APP_SECRET',
-  'USER_ID_FROM_PREVIOUS_STEP',
-);
+// // Step 3: Create an instance of XTRA with the userId as null to register the user first time
+// const xtraUserObj = new XtraVision(
+//  '4e9503fc-2796-11ed-8bdc-12fab4ffabed', '1af719ff-2792-11ed-8bdc-12fab4ffabed', 'vNxr90yBtR9KrLwB3LobS6KLIwIEKiIq',
+//   'b55836d9-1aa3-4dba-9a2e-5b0be0d34346',
+// );
 
-console.log('Auth Token:', xtraUserObj.getAuthToken());
+// console.log('Auth Token:', xtraObj.getAuthToken());
 
-const janStartDate = new Date();
-janStartDate.setMonth(janStartDate.getMonth() - 1);
+// // const janStartDate = new Date();
+// // janStartDate.setMonth(janStartDate.getMonth() - 1);
 
-xtraUserObj.getUserClassStats(null, janStartDate).then((userStats) => {
-  console.log(userStats);
-});
+// // xtraUserObj.getUserClassStats(null, janStartDate).then((userStats) => {
+// //   console.log(userStats);
+// // });
 
-xtraUserObj.getUserAssessmentResults(janStartDate).then((results) => {
-  console.log(results);
-});
+// // xtraUserObj.getUserAssessmentResults(janStartDate).then((results) => {
+// //   console.log(results);
+// // });
