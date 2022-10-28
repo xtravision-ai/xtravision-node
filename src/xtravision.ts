@@ -2,7 +2,6 @@ import { GraphQLClient } from 'graphql-request';
 import * as jwt from 'jsonwebtoken';
 import {
   GET_USER_ASSESSMENT_RESULTS,
-  GET_USER_CLASS_STATS,
   REGISTER_TRAINER_MUTATION,
   REGISTER_USER_MUTATION,
 } from './graphql/common';
