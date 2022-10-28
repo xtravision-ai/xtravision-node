@@ -85,16 +85,6 @@ export class XtraVision {
     return await this.graphQLClient.request(REGISTER_TRAINER_MUTATION, variables);
   }
 
-  async getUserClassStats(classScheduleId?: string | null, startDate?: Date | null, endDate?: Date | null) {
-    const variables: any = {};
-    if (classScheduleId) variables['classScheduleId'] = classScheduleId;
-    if (startDate) variables['startDate'] = startDate;
-    if (endDate) variables['endDate'] = endDate;
-
-    // make graphql call to XTRA SaaS server
-    return await this.graphQLClient.request(GET_USER_CLASS_STATS, variables);
-  }
-
   async getUserAssessmentResults(limit: Number, offset: Number, userAssessmentFilter: UserAssessmentFilter) {
     const variables: any = {};
     if (userAssessmentFilter) variables['userAssessmentFilter'] = userAssessmentFilter;

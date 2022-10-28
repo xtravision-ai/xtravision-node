@@ -20,25 +20,6 @@ export const REGISTER_TRAINER_MUTATION = gql`
   }
 `;
 
-export const GET_USER_CLASS_STATS = gql`
-  query getUserClassStats($classScheduleId: String, $startDate: DateTime, $endDate: DateTime) {
-    getUserClassStats(classScheduleId: $classScheduleId, startDate: $startDate, endDate: $endDate) {
-      id
-      timeSpent
-      otherStats
-      statDate
-      user {
-        id
-        firstName
-        lastName
-      }
-      classSchedule {
-        id
-      }
-    }
-  }
-`;
-
 export const GET_USER_ASSESSMENT_RESULTS = gql`
   query getUserAssessmentResults($limit: Int, $offset: Int, $userAssessmentFilter: userAssessmentFilter!) {
     getUserAssessmentResults(limit: $limit, offset: $offset, userAssessmentFilter: $userAssessmentFilter) {
