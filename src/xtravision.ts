@@ -2,8 +2,9 @@ import { GraphQLClient } from 'graphql-request';
 import * as jwt from 'jsonwebtoken';
 import {
   GET_USER_ASSESSMENT_RESULTS,
-  REGISTER_TRAINER_MUTATION,
+  USER_SESSION_CREATE_MUTATION,
   REGISTER_USER_MUTATION,
+  AUTHORIZED_REQUEST_DATA_QUERY,
 } from './graphql/common';
 
 const SERVER_URL = !!process.env.IS_XTRA_DEV
@@ -73,15 +74,19 @@ export class XtraVision {
     return response?.registerUser;
   }
 
-  async registerTrainer(firstName: string, lastName: string, email: string) {
-    const variables = {
-      firstName,
-      lastName,
-      email,
-    };
-
+  async getSessionId() {
+    const variables: any = {};
+  
     // make graphql call to XTRA SaaS server and return the data
-    return await this.graphQLClient.request(REGISTER_TRAINER_MUTATION, variables);
+    const response = await this.graphQLClient.request(USER_SESSION_CREATE_MUTATION, variables);
+    return response.createUserSession;
+  }
+
+  async getAuthorizedData(authToken: string, sessionId: string | null, data: any ){
+    const reqData = {authToken, sessionId, data};
+    const response = await this.graphQLClient.request(AUTHORIZED_REQUEST_DATA_QUERY, {reqData});
+    return response;
+
   }
 
   async getUserAssessmentResults(limit: Number, offset: Number, userAssessmentFilter: UserAssessmentFilter) {
