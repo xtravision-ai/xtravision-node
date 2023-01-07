@@ -41,6 +41,7 @@ async function registerUser() {
   }
 }
 
+/* @ts-ignore */
 async function doSomeOperation(userId: string) {
   // get xtra-Object for specific user with 30days validation
   const xtraObj = new XtraVision({ ...credentials, userId }, { expiresIn: '30d' });
