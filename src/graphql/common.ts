@@ -7,7 +7,6 @@ export const REGISTER_USER_MUTATION = gql`
       firstName
       lastName
       email
-      createdAt
     }
   }
 `;

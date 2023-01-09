@@ -7,10 +7,11 @@ import {
   AUTHORIZED_REQUEST_DATA_QUERY,
 } from './graphql/common';
 
-const SERVER_URL = !!process.env.IS_XTRA_DEV
-  ? 'http://localhost:4000/api/v1/graphql'
-  : 'https://saasapi.xtravision.ai/api/v1/graphql';
 
+// https://saasstagingapi.xtravision.ai/wss/v2/assessment/fitness
+//'https://saasstagingapi.xtravision.ai/api/v1/graphql'
+const SERVER_URL = process.env.XTRA_SERVER_URL? process.env.XTRA_SERVER_URL as string :  'https://saasapi.xtravision.ai/api/v1/graphql'
+ 
 type Credentials = {
   appId: string;
   orgId: string;

@@ -35,8 +35,8 @@
     "windows:clean": "rmdir /s dist",
     "lint": "eslint --ext .ts src",
     "start:demo": "ts-node demo/index.ts",
-    "start:local": "IS_XTRA_DEV=true ts-node demo/index.ts",
-    "start:local:windows": "yarn build:windows && set IS_XTRA_DEV=true && ts-node demo/index.ts"
+    "start:dev": "IS_XTRA_DEV=true ts-node demo/index.ts",
+    "start:dev:windows": "yarn build:windows && set IS_XTRA_DEV=true && ts-node demo/index.ts"
   },
   "dependencies": {
     "@types/jsonwebtoken": "^8.5.8",
