@@ -1,6 +1,6 @@
 {
   "name": "@xtravision/xtravision-node",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "The official node.js library for the XtraVision API",
   "author": "PMR, Inc.",
   "keywords": [
@@ -35,8 +35,8 @@
     "windows:clean": "rmdir /s dist",
     "lint": "eslint --ext .ts src",
     "start:demo": "ts-node demo/index.ts",
-    "start:local": "IS_XTRA_DEV=true ts-node demo/index.ts"
-
+    "start:dev": "IS_XTRA_DEV=true ts-node demo/index.ts",
+    "start:dev:windows": "yarn build:windows && set IS_XTRA_DEV=true && ts-node demo/index.ts"
   },
   "dependencies": {
     "@types/jsonwebtoken": "^8.5.8",
