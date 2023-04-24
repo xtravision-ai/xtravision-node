@@ -10,8 +10,9 @@ import {
 
 // https://saasstagingapi.xtravision.ai/wss/v2/assessment/fitness
 //'https://saasstagingapi.xtravision.ai/api/v1/graphql'
-const SERVER_URL = process.env.XTRA_SERVER_URL? process.env.XTRA_SERVER_URL as string :  'https://saasapi.xtravision.ai/api/v1/graphql'
- 
+// const SERVER_URL = process.env.XTRA_SERVER_URL? process.env.XTRA_SERVER_URL as string :  'https://saasapi.xtravision.ai/api/v1/graphql'
+const SERVER_URL = 'http://localhost:4000/api/v1/graphql';
+
 type Credentials = {
   appId: string;
   orgId: string;
@@ -28,6 +29,7 @@ type User = {
 type UserAssessmentFilter = {
   startDate: Date;
   endDate: Date;
+  additionalStats: Boolean;
 };
 
 export class XtraVision {
@@ -77,15 +79,15 @@ export class XtraVision {
 
   async getSessionId() {
     const variables: any = {};
-  
+
     // make graphql call to XTRA SaaS server and return the data
     const response = await this.graphQLClient.request(USER_SESSION_CREATE_MUTATION, variables);
     return response.createUserSession;
   }
 
-  async getAuthorizedData(authToken: string, sessionId: string | null, data: any ){
-    const reqData = {authToken, sessionId, data};
-    const response = await this.graphQLClient.request(AUTHORIZED_REQUEST_DATA_QUERY, {reqData});
+  async getAuthorizedData(authToken: string, sessionId: string | null, data: any) {
+    const reqData = { authToken, sessionId, data };
+    const response = await this.graphQLClient.request(AUTHORIZED_REQUEST_DATA_QUERY, { reqData });
     return response;
 
   }
