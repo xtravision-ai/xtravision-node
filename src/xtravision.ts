@@ -10,8 +10,8 @@ import {
 
 // https://saasstagingapi.xtravision.ai/wss/v2/assessment/fitness
 //'https://saasstagingapi.xtravision.ai/api/v1/graphql'
-// const SERVER_URL = process.env.XTRA_SERVER_URL? process.env.XTRA_SERVER_URL as string :  'https://saasapi.xtravision.ai/api/v1/graphql'
-const SERVER_URL = 'http://localhost:4000/api/v1/graphql';
+const SERVER_URL = process.env.XTRA_SERVER_URL? process.env.XTRA_SERVER_URL as string :  'https://saasapi.xtravision.ai/api/v1/graphql'
+// const SERVER_URL = 'http://localhost:4000/api/v1/graphql';
 
 type Credentials = {
   appId: string;

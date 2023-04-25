@@ -9,12 +9,11 @@ import { XtraVision } from '../dist/xtravision';
 
 // required variable
 const credentials: { orgId: string, appId: string, appSecret: string, userId?: any } = {
-    orgId: "dd83059c-82f3-11ec-a9f5-a4bb6d6edc4e",
-    appId: "95eacd45-82f5-11ec-a9f5-a4bb6d6edc4e",
-    appSecret: "SK_WOLLENDANCE",
+    orgId: process.env.XTRA_ORG_ID ? process.env.XTRA_ORG_ID as string : 'b86fa346-43cc-11ed-bac9-0492261dcf77',
+    appId: process.env.XTRA_APP_ID ? process.env.XTRA_APP_ID as string : 'bb3482fd-43cc-11ed-bac9-0492261dcf77',
+    appSecret: process.env.XTRA_APP_SECRET ? process.env.XTRA_APP_SECRET as string : '614f0f67a7811308',
     userId: null,
-};
-
+}
 
 /**
  * code Snippet for user registration
@@ -62,8 +61,9 @@ async function doSomeOperation(userId: string) {
     const currentMonthFirstDay = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
 
     // adjust this for filtering the results
-    const limit = 3;
+    const limit = 5;
     const offset = 0;
+    // flag to get more detailed stats
     const additionalStats = true;
 
     const assessmentResults = await xtraObj.getUserAssessmentResults(limit, offset, {
