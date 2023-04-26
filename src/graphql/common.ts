@@ -40,6 +40,9 @@ export const GET_USER_ASSESSMENT_RESULTS = gql`
         id
         results
         savedDate
+        additionalStats{
+          additionalStats
+        }
       }
     }
   }
