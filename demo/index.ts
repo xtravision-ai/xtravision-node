@@ -7,14 +7,10 @@ import { XtraVision } from '../dist/xtravision';
 //   appId: "2ac14a10-2e16-11ed-adfc-0242ac120002",
 // }
 
-// required variable
-// orgId: "dd83059c-82f3-11ec-a9f5-a4bb6d6edc4e",
-// appId: "95eacd45-82f5-11ec-a9f5-a4bb6d6edc4e",
-// appSecret: "SK_WOLLENDANCE",
 const credentials: { orgId: string, appId: string, appSecret: string, userId?: any } = {
-    orgId: process.env.XTRA_ORG_ID ? process.env.XTRA_ORG_ID as string : 'dd83059c-82f3-11ec-a9f5-a4bb6d6edc4e',
-    appId: process.env.XTRA_APP_ID ? process.env.XTRA_APP_ID as string : '95eacd45-82f5-11ec-a9f5-a4bb6d6edc4e',
-    appSecret: process.env.XTRA_APP_SECRET ? process.env.XTRA_APP_SECRET as string : 'SK_WOLLENDANCE',
+    orgId: process.env.XTRA_ORG_ID ? process.env.XTRA_ORG_ID as string : 'b86fa346-43cc-11ed-bac9-0492261dcf77',
+    appId: process.env.XTRA_APP_ID ? process.env.XTRA_APP_ID as string : 'bb3482fd-43cc-11ed-bac9-0492261dcf77',
+    appSecret: process.env.XTRA_APP_SECRET ? process.env.XTRA_APP_SECRET as string : '614f0f67a7811308',
     userId: null,
 }
 
