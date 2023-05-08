@@ -7,7 +7,6 @@ import { XtraVision } from '../dist/xtravision';
 //   appId: "2ac14a10-2e16-11ed-adfc-0242ac120002",
 // }
 
-// required variable
 const credentials: { orgId: string, appId: string, appSecret: string, userId?: any } = {
     orgId: process.env.XTRA_ORG_ID ? process.env.XTRA_ORG_ID as string : 'b86fa346-43cc-11ed-bac9-0492261dcf77',
     appId: process.env.XTRA_APP_ID ? process.env.XTRA_APP_ID as string : 'bb3482fd-43cc-11ed-bac9-0492261dcf77',
@@ -64,18 +63,18 @@ async function doSomeOperation(userId: string) {
     const limit = 5;
     const offset = 0;
     // flag to get more detailed stats
-    const additionalStats = true;
+    const isRequiredStats = true;
 
     const assessmentResults = await xtraObj.getUserAssessmentResults(limit, offset, {
         startDate: currentMonthFirstDay,
-        endDate: new Date('2023-04-24 16:44:09'),
-        additionalStats,
+        endDate: currentDate,
+        isRequiredStats,
     },
     );
 
     // show all assessmentResults: display empty array if data is not present
     log('User assessmentResults:', assessmentResults);
-
+    
     // fist user assessmentResults
     assessmentResults.length > 0 ? log('First result of assessmentResults:', assessmentResults[0].results) : '';
 
