@@ -10,7 +10,7 @@ import {
 
 // https://saasstagingapi.xtravision.ai/wss/v2/assessment/fitness
 //'https://saasstagingapi.xtravision.ai/api/v1/graphql'
-const SERVER_URL = process.env.XTRA_SERVER_URL? process.env.XTRA_SERVER_URL as string :  'https://saasapi.xtravision.ai/api/v1/graphql'
+const SERVER_URL = process.env.XTRA_SERVER_URL ? process.env.XTRA_SERVER_URL as string : 'https://saasapi.xtravision.ai/api/v1/graphql'
 // const SERVER_URL = 'http://localhost:4000/api/v1/graphql';
 
 type Credentials = {
@@ -24,6 +24,8 @@ type User = {
   email: string;
   firstName?: string;
   lastName?: string;
+  profileData?: any;
+  timezone?: string;
 };
 
 type UserAssessmentFilter = {
@@ -71,6 +73,9 @@ export class XtraVision {
 
     if (userObj.firstName) variables['firstName'] = userObj.firstName;
     if (userObj.lastName) variables['lastName'] = userObj.lastName;
+    if (userObj.profileData) variables['profileData'] = userObj.profileData;
+    if (userObj.timezone) variables['timezone'] = userObj.timezone;
+
 
     // make graphql call to XTRA SaaS server and return the data
     const response = await this.graphQLClient.request(REGISTER_USER_MUTATION, variables);

@@ -1,12 +1,26 @@
 import { gql } from 'graphql-request';
 
 export const REGISTER_USER_MUTATION = gql`
-  mutation registerUser($firstName: String, $lastName: String, $email: String!) {
-    registerUser(firstName: $firstName, lastName: $lastName, email: $email) {
+  mutation registerUser(
+    $firstName: String, 
+    $lastName: String,  
+    $profileData: JSON, 
+    $timezone: String, 
+    $email: String!
+    ) {
+    registerUser(
+      firstName: $firstName, 
+      lastName: $lastName, 
+      email: $email, 
+      profileData: $profileData, 
+      timezone: $timezone
+      ) {
       id
       firstName
       lastName
       email
+      profileData
+      timezone
     }
   }
 `;
