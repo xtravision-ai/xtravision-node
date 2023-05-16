@@ -29,9 +29,15 @@ async function registerUser() {
 
     //user:
     const userObj = {
-        email: process.env.XTRA_APP_USER ? process.env.XTRA_APP_USER as string : 'johnfly@yourdomain.com',
-        firstName: 'John',
-        lastName: 'Fly',
+        email: process.env.XTRA_APP_USER ? process.env.XTRA_APP_USER as string : 'test@yourdomain.com',
+        firstName: 'test',
+        lastName: 'test',
+        profileData: {
+            height: 179,
+            weight: 80,
+        },
+        // IANA Time Zone format, "Area/city", eg: America/New_York
+        timezone: 'Asia/Kolkata'
     };
     try {
         return await xtraObj.registerUser(userObj);
@@ -74,7 +80,7 @@ async function doSomeOperation(userId: string) {
 
     // show all assessmentResults: display empty array if data is not present
     log('User assessmentResults:', assessmentResults);
-    
+
     // fist user assessmentResults
     assessmentResults.length > 0 ? log('First result of assessmentResults:', assessmentResults[0].results) : '';
 
