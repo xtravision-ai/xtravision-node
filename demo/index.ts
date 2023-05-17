@@ -29,15 +29,15 @@ async function registerUser() {
 
     //user:
     const userObj = {
-        email: process.env.XTRA_APP_USER ? process.env.XTRA_APP_USER as string : 'test@yourdomain.com',
-        firstName: 'test',
-        lastName: 'test',
+        email: process.env.XTRA_APP_USER ? process.env.XTRA_APP_USER as string : 'joesmith@yourdomain.com',
+        firstName: 'Joe',
+        lastName: 'Smith',
         profileData: {
             height: 179,
             weight: 80,
         },
         // IANA Time Zone format, "Area/city", eg: America/New_York
-        timezone: 'Asia/Kolkata'
+        timezone: 'America/New_York'
     };
     try {
         return await xtraObj.registerUser(userObj);
