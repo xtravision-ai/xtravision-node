@@ -10,8 +10,8 @@ import {
 
 // https://saasstagingapi.xtravision.ai/wss/v2/assessment/fitness
 //'https://saasstagingapi.xtravision.ai/api/v1/graphql'
-const SERVER_URL = process.env.XTRA_SERVER_URL ? process.env.XTRA_SERVER_URL as string : 'https://saasapi.xtravision.ai/api/v1/graphql'
-// const SERVER_URL = 'http://localhost:4000/api/v1/graphql';
+// const SERVER_URL = process.env.XTRA_SERVER_URL ? process.env.XTRA_SERVER_URL as string : 'https://saasapi.xtravision.ai/api/v1/graphql'
+const SERVER_URL = 'http://localhost:4000/api/v1/graphql';
 
 type Credentials = {
   appId: string;
@@ -33,6 +33,29 @@ type UserAssessmentFilter = {
   endDate: Date;
   isRequiredStats: Boolean;
 };
+
+type metaData = {
+  connectionDetails?: {
+    ipAddress?: string,
+    location?: string,
+  };
+  deviceDetails?: {
+    osDetails?: {
+      name?: string,
+      version?: string,
+      apiVersion?: string,
+    };
+    manufacturerDetails?: {
+      make?: string,
+      model?: string,
+      variant?: string
+    }
+  };
+  sdkDetails?: {
+    name?: string,
+    version?: string,
+  }
+}
 
 export class XtraVision {
   readonly userId: string | null;
@@ -82,8 +105,10 @@ export class XtraVision {
     return response?.registerUser;
   }
 
-  async getSessionId() {
-    const variables: any = {};
+  async getSessionId(metaData: metaData) {
+    const variables: any = {
+      metaData
+    };
 
     // make graphql call to XTRA SaaS server and return the data
     const response = await this.graphQLClient.request(USER_SESSION_CREATE_MUTATION, variables);

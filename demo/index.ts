@@ -1,4 +1,6 @@
 import { XtraVision } from '../dist/xtravision';
+import axios from 'axios';
+import os from 'os';
 
 // 
 // let credentials = {
@@ -8,9 +10,9 @@ import { XtraVision } from '../dist/xtravision';
 // }
 
 const credentials: { orgId: string, appId: string, appSecret: string, userId?: any } = {
-    orgId: process.env.XTRA_ORG_ID ? process.env.XTRA_ORG_ID as string : 'b86fa346-43cc-11ed-bac9-0492261dcf77',
-    appId: process.env.XTRA_APP_ID ? process.env.XTRA_APP_ID as string : 'bb3482fd-43cc-11ed-bac9-0492261dcf77',
-    appSecret: process.env.XTRA_APP_SECRET ? process.env.XTRA_APP_SECRET as string : '614f0f67a7811308',
+    orgId: "dd83059c-82f3-11ec-a9f5-a4bb6d6edc4e",
+    appId: "95eacd45-82f5-11ec-a9f5-a4bb6d6edc4e",
+    appSecret: "SK_WOLLENDANCE",
     userId: null,
 }
 
@@ -55,9 +57,46 @@ async function doSomeOperation(userId: string) {
     const authToken = xtraObj.getAuthToken();
     log(`Authtoken for user-id(${userId}): `, authToken);
 
-    // get session-id
-    let sessionData = await xtraObj.getSessionId()
-    log("sessionData ", sessionData)
+    try {
+        const response = await axios.get('https://ipapi.co/json/');
+        const { data } = response;
+
+        const connectionDetails = {
+            ipAddress: data?.ip,
+            location: `${data?.city}, ${data?.region_code}, ${data?.country}`
+        }
+
+        const deviceDetails = {
+            osDetails: {
+                name: os.platform() || "Unknown OS",
+                version: os.release() || "Unknown OS Version",
+                apiVersion: process.versions.node || "Unknown OS apiVersion",
+            },
+            // needs to be checked:
+            manufacturerDetails: {
+                make: "Samsung",
+                model: "Galaxy S10",
+                variant: "SM-G973U"
+            }
+        };
+
+        const sdkDetails = {
+            name: process.env.npm_package_name || "Unknown SDK",
+            version: process.env.npm_package_version || "Unknown SDK Version",
+        };
+
+        const metaData = {
+            connectionDetails: connectionDetails,
+            deviceDetails: deviceDetails,
+            sdkDetails: sdkDetails
+        };
+
+        // get session-id
+        let sessionData = await xtraObj.getSessionId(metaData)
+        log("sessionData ", sessionData)
+    } catch (err) {
+        console.log("An error occured :", err)
+    }
 
     // log(" Validate Request Data", await xtraObj.getAuthorizedData('mt', null, {assessmentName:"SQUATS", requestedAt:Date.now(), c:1}))
 

@@ -26,11 +26,12 @@ export const REGISTER_USER_MUTATION = gql`
 `;
 
 export const USER_SESSION_CREATE_MUTATION = gql`
-  mutation createUserSession {
-    createUserSession {
+  mutation createUserSession($metaData: JSON) {
+    createUserSession(metaData: $metaData) {
       id
       userId
       createdAt
+      metaData
     }
   }
 `;
