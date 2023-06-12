@@ -75,7 +75,7 @@ async function doSomeOperation(userId: string) {
         startDate: currentMonthFirstDay,
         endDate: currentDate,
         isRequiredStats,
-        sessionId: sessionData?.id,
+        //sessionId: "", // ask for specific session data
     });
 
     // show all assessmentResults: display empty array if data is not present
