@@ -29,9 +29,10 @@ type User = {
 };
 
 type UserAssessmentFilter = {
-  startDate: Date;
-  endDate: Date;
-  isRequiredStats: Boolean;
+  startDate?: Date;
+  endDate?: Date;
+  isRequiredStats?: Boolean;
+  sessionId?: string;
 };
 
 export class XtraVision {
