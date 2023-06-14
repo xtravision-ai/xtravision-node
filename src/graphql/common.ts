@@ -58,6 +58,7 @@ export const GET_USER_ASSESSMENT_RESULTS = gql`
           additionalStats
           tsStats
         }
+        sessionId
       }
     }
   }
