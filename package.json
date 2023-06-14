@@ -1,6 +1,6 @@
 {
   "name": "@xtravision/xtravision-node",
-  "version": "2.3.0",
+  "version": "2.4.0",
   "description": "The official node.js library for the XtraVision API",
   "author": "PMR, Inc.",
   "keywords": [
