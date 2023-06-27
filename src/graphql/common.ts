@@ -46,7 +46,7 @@ export const REGISTER_TRAINER_MUTATION = gql`
 `;
 
 export const GET_USER_ASSESSMENT_RESULTS = gql`
-  query getUserAssessmentResults($limit: Int, $offset: Int, $userAssessmentFilter: userAssessmentFilter!) {
+  query getUserAssessmentResults($limit: Int, $offset: Int, $userAssessmentFilter: userAssessmentFilter) {
     getUserAssessmentResults(limit: $limit, offset: $offset, userAssessmentFilter: $userAssessmentFilter) {
       total
       userAssessmentResult {
