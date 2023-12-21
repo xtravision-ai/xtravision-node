@@ -1,6 +1,6 @@
 {
   "name": "@xtravision/xtravision-node",
-  "version": "2.4.0",
+  "version": "2.5.0",
   "description": "The official node.js library for the XtraVision API",
   "author": "PMR, Inc.",
   "keywords": [
@@ -18,7 +18,7 @@
   "types": "./dist/index.d.ts",
   "license": "MIT",
   "engines": {
-    "yarn": "1.22.5",
+    "yarn": ">=1.22.5",
     "node": ">=16.0.0"
   },
   "publishConfig": {
@@ -30,12 +30,13 @@
   "scripts": {
     "prepare": "tsc --outDir dist/",
     "build": "yarn linux:clean && tsc",
+    "build:sdk": "yarn build",
     "linux:clean": " rm -rf ./dist",
     "build:windows": "yarn windows:clean && tsc",
     "windows:clean": "rmdir /s dist",
     "lint": "eslint --ext .ts src",
     "start:demo": "ts-node demo/index.ts",
-    "start:dev": "IS_XTRA_DEV=true ts-node demo/index.ts",
+    "start:dev": "yarn build && IS_XTRA_DEV=true ts-node demo/index.ts",
     "start:dev:windows": "yarn build:windows && set IS_XTRA_DEV=true && ts-node demo/index.ts"
   },
   "dependencies": {
