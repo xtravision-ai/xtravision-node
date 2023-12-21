@@ -84,6 +84,13 @@ async function doSomeOperation(userId: string) {
     // fist user assessmentResults
     assessmentResults.length > 0 ? log('First result of assessmentResults:', assessmentResults[0].results) : '';
 
+
+    // Get screener chat history
+    // const chatFilter = {id:'fd3211d3-5800-4729-8d21-a254cafa6235'}
+    // const chatHistory = await xtraObj.getScreenerChatHistory(chatFilter)
+    const chatHistory = await xtraObj.getScreenerChatHistory()
+    log('User Screener Chat History:', chatHistory);
+
 }
 
 // utility method

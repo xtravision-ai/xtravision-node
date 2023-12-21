@@ -64,6 +64,20 @@ export const GET_USER_ASSESSMENT_RESULTS = gql`
   }
 `;
 
+export const GET_USER_SCREENER_CHAT_HISTORY = gql`
+query GetScreenerChatHistory( $filter: ScreenerChatFilter,  $offset:Int,  $limit:Int,  $order: SortDirection) {
+  getScreenerChatHistory( filter:$filter,  offset:$offset, limit:$limit, order:$order) {
+      total
+      screenerChatHistory {
+          id
+          chat
+          createdAt
+          updatedAt
+      }
+  }
+}
+`;
+
 export const AUTHORIZED_REQUEST_DATA_QUERY = gql`
   query getAuthorizedRequestData($reqData: AuthRequest) {
     getAuthorizedRequestData(reqData: $reqData) {

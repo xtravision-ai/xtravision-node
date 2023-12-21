@@ -5,8 +5,10 @@ import {
   USER_SESSION_CREATE_MUTATION,
   REGISTER_USER_MUTATION,
   AUTHORIZED_REQUEST_DATA_QUERY,
+  GET_USER_SCREENER_CHAT_HISTORY,
 } from './graphql/common';
 
+//for local => XTRA_SERVER_URL=http://localhost:4000/api/v1/graphql XTRA_ORG_ID=6968de9f-2f8b-4516-be34-77689ce89ecf XTRA_APP_ID=a4f9b676-a693-406e-9813-78967072f832 XTRA_APP_SECRET=5TgQh9AhydE7uRyg XTRA_APP_USER=manish@xtravision.ai yarn start:dev
 
 // https://saasstagingapi.xtravision.ai/wss/v2/assessment/fitness
 //'https://saasstagingapi.xtravision.ai/api/v1/graphql'
@@ -33,6 +35,12 @@ type UserAssessmentFilter = {
   endDate?: Date;
   isRequiredStats?: Boolean;
   sessionId?: string;
+};
+
+type ScreenerChatFilter = {
+  startDate?: Date;
+  endDate?: Date;
+  id?: String;
 };
 
 export class XtraVision {
@@ -108,5 +116,29 @@ export class XtraVision {
     // make graphql call to XTRA SaaS server
     const response = await this.graphQLClient.request(GET_USER_ASSESSMENT_RESULTS, variables);
     return response?.getUserAssessmentResults;
+  }
+
+  /**
+   * 
+   * Use below method to fetch User Screener Chat History data
+   * 
+   * @param filter 
+   * @param limit 
+   * @param offset 
+   * @param order 
+   * 
+   * @returns 
+   */
+  async getScreenerChatHistory(filter?: ScreenerChatFilter, limit: Number = 10, offset: Number = 0, order = 'DESC') {
+    const variables: any = {};
+    if (filter && typeof filter === "object" ) variables['filter'] = filter;
+
+    variables['limit'] = limit;
+    variables['offset'] = offset;
+    variables['order'] = order
+
+    // make graphql call to XTRA SaaS server
+    const response = await this.graphQLClient.request(GET_USER_SCREENER_CHAT_HISTORY, variables);
+    return response?.getScreenerChatHistory;
   }
 }
